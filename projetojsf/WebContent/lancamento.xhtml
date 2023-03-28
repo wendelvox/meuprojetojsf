@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "htth://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui = "http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<title>Lançamento</title>
+</h:head>
+
+<h:body>
+
+
+<ui:include src="/menu.xhtml"/>
+
+		<h:form>
+			<h:panelGrid columns="2">
+				<f:facet name="reader">
+					<h:outputText value="Cadastro NF" />
+				</f:facet>
+
+				<h:outputLabel value="Id:" />
+				<h:inputText value="#{lancamentoBean.lancamento.id}" readonly="true" />
+
+				<h:outputLabel value="Destino: " />
+				<h:inputText value="#{lancamentoBean.lancamento.empresaDestino}" />
+
+				<h:outputLabel value="Origem:  " />
+				<h:inputText value="#{lancamentoBean.lancamento.empresaOrigem}" />
+
+				<h:outputLabel value="NF:  " />
+				<h:inputText value="#{lancamentoBean.lancamento.numeroNotaFiscal}" />
+				
+				<h:outputLabel value="Estado: " />
+				<h:selectOneMenu value="#{lancamentoBean.lancamento.estado}" id="comboEstado" immediate="true"
+				converter="estadoConverter">
+				<f:selectItem itemLabel="          " noSelectionOption="true"/>
+				<f:selectItems value="#{lancamentoBean.estados}"/>
+				<f:ajax event="change" execute="@this" listener="#{lancamentoBean.carregaCidade}" render="comboCidade"/>
+				
+				</h:selectOneMenu>
+				
+				<h:outputLabel value="Cidade: "/>
+				<h:selectOneMenu value="#{lancamentoBean.lancamento.cidade}" id="comboCidade" converter="cidadeConverter">
+				<f:selectItem itemLabel="        " noSelectionOption="true"/>
+				<f:selectItems value="#{lancamentoBean.cidades}"/>
+				</h:selectOneMenu>
+				
+				
+				
+			</h:panelGrid>
+			<h:outputText />
+			<h:panelGroup>
+
+				<h:commandButton style="margin-left:1cm;" value="Novo"
+					action="#{lancamentoBean.novo}" image="resources/imagens/new.png"
+					title="Novo" />
+				<h:commandButton style="margin-left:1cm;" value="Salvar"
+					action="#{lancamentoBean.salvar}"
+					image="resources/imagens/Save.png" title="Salvar" />
+				<h:commandButton style="margin-left:1cm;" value="Deletar"
+					action="#{lancamentoBean.remove}"
+					image="resources/imagens/delete.png" title="Excluir" />
+				<h:commandButton style="margin-left:1cm;" value="Limpar"
+					type="reset" image="resources/imagens/limpar.png" title="Limpar" />
+
+			</h:panelGroup>
+
+			<br />
+
+			<h:dataTable value="#{lancamentoBean.lancamentos}" var="lancamento" border="3">
+				<f:facet name="header">Lista de Usuários Cadastradas</f:facet>
+				<h:column>
+				
+				
+					<f:facet name="header">ID</f:facet>
+					<h:inputText value="#{lancamento.id}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Origem</f:facet>
+					<h:inputText value="#{lancamento.empresaOrigem}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Destino</f:facet>
+					<h:inputText value="#{lancamento.empresaDestino}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">NF</f:facet>
+					<h:inputText value="#{lancamento.numeroNotaFiscal}" />
+				</h:column>
+
+				<h:column>
+					<h:commandLink title="Editar"  immediate="true" action="#{lancamentoBean.editar}">
+					
+						<f:setPropertyActionListener value="#{lancamento}" target="#{lancamentoBean.lancamento}"				
+						 />
+						<h:graphicImage value="resources/imagens/editar.png" />
+					</h:commandLink>
+				</h:column>
+
+				<h:column>
+					<h:commandLink title="Excluir" action="#{lancamentoBean.remove}">
+						<f:setPropertyActionListener value="#{lancamento}"
+							target="#{lancamentoBean.lancamento}" />
+						<h:graphicImage value="resources/imagens/excluir.png" />
+
+					</h:commandLink>
+				</h:column>
+
+			</h:dataTable>
+
+	</h:form>
+
+</h:body>
+
+</html>
