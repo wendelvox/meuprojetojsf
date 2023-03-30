@@ -38,7 +38,7 @@
 				converter="estadoConverter">
 				<f:selectItem itemLabel="          " noSelectionOption="true"/>
 				<f:selectItems value="#{lancamentoBean.estados}"/>
-				<f:ajax event="change" execute="@this" listener="#{lancamentoBean.carregaCidade}" render="comboCidade"/>
+				<f:ajax event="change" execute="@form" listener="#{lancamentoBean.carregaCidade}" render="@form"/>
 				
 				</h:selectOneMenu>
 				
@@ -70,34 +70,34 @@
 
 			<br />
 
-			<h:dataTable value="#{lancamentoBean.lancamentos}" var="lancamento" border="3">
+			<b:dataTable value="#{lancamentoBean.lancamentos}" var="l" border="3">
 				<f:facet name="header">Lista de Usuários Cadastradas</f:facet>
 				<h:column>
 				
 				
 					<f:facet name="header">ID</f:facet>
-					<h:inputText value="#{lancamento.id}" />
+					<h:inputText value="#{l.id}" />
 				</h:column>
 
 				<h:column>
 					<f:facet name="header">Origem</f:facet>
-					<h:inputText value="#{lancamento.empresaOrigem}" />
+					<h:inputText value="#{l.empresaOrigem}" />
 				</h:column>
 
 				<h:column>
 					<f:facet name="header">Destino</f:facet>
-					<h:inputText value="#{lancamento.empresaDestino}" />
+					<h:inputText value="#{l.empresaDestino}" />
 				</h:column>
 
 				<h:column>
 					<f:facet name="header">NF</f:facet>
-					<h:inputText value="#{lancamento.numeroNotaFiscal}" />
+					<h:inputText value="#{l.numeroNotaFiscal}" />
 				</h:column>
 
 				<h:column>
 					<h:commandLink title="Editar"  immediate="true" action="#{lancamentoBean.editar}">
 					
-						<f:setPropertyActionListener value="#{lancamento}" target="#{lancamentoBean.lancamento}"				
+						<f:setPropertyActionListener value="#{l}" target="#{lancamentoBean.lancamento}"				
 						 />
 						<h:graphicImage value="resources/imagens/editar.png" />
 					</h:commandLink>
@@ -105,14 +105,14 @@
 
 				<h:column>
 					<h:commandLink title="Excluir" action="#{lancamentoBean.remove}">
-						<f:setPropertyActionListener value="#{lancamento}"
+						<f:setPropertyActionListener value="#{l}"
 							target="#{lancamentoBean.lancamento}" />
 						<h:graphicImage value="resources/imagens/excluir.png" />
 
 					</h:commandLink>
 				</h:column>
 
-			</h:dataTable>
+			</b:dataTable>
 
 	</h:form>
 

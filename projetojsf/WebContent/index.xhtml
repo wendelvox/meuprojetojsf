@@ -2,30 +2,55 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "htth://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:b="http://bootsfaces.net/ui">
+	  xmlns:b="http://bootsfaces.net/ui"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
 	<title>Olá JSF</title>
+	<meta name="Wendel S Santos" content="Wendel S Santos"></meta>
+	
+        <style type="text/css">
+        
+            .form-signin {
+                margin: 0 auto;
+                max-width: 330px;
+                padding: 15px;
+            }
+        </style>
 </h:head>
 
-<h:body>
-<h:graphicImage  height="50" width="50" value="resources/imagens/logoRm.jpg"/>
+<h:body style="padding-top: 60px; background-color: #add;">
 
-<h1>Realize seu Login!</h1>
 
-<h:form>
+<b:container>
 
-<h:panelGrid colum="2">
-<h:outputLabel value="Login:"/>
-<h:inputText value ="#{pessoaBean.pessoa.login}"/>
+<h:form  styleClass="form-signin"  prependId="false">
+<h2 class="form-signin-heading">Realize seu Login!</h2>
+<b:messages auto-update="true" id="msg"/>
 
-<h:outputLabel value="Senha: "/>
-<h:inputSecret value="#{pessoaBean.pessoa.senha}"/>
 
-</h:panelGrid>
-<h:commandButton value="Acessar" action="#{pessoaBean.logar}"/>
+<b:inputText id="login"  placeholder="Usuário" value ="#{pessoaBean.pessoa.login}" required="true" requiredMessage="Informe o usuário">
+ <f:facet name="prepend">
+ <b:icon name="user" /></f:facet>
+</b:inputText>
+<b:message for="login"/>
+
+
+<b:inputSecret   placeholder="Senha" id="senha" value="#{pessoaBean.pessoa.senha}" required="true" requiredMessage="Informe a senha">
+<f:facet name="prepend">
+<b:iconAwesome name="key" />
+</f:facet>
+</b:inputSecret>
+
+<b:selectBooleanCheckbox value="true" caption="relembre"/>
+<b:commandButton value="Acessar" icon="log-in" size="lg" look="primary btn-block" action="#{pessoaBean.logar}"/>
+
+
+
+
 </h:form>
-
+</b:container>
 </h:body>
 
 </html>

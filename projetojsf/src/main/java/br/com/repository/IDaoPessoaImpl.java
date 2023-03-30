@@ -20,9 +20,12 @@ public class IDaoPessoaImpl implements IDaoPessoa {
 		EntityManager entityManager = JPAUtil.getEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
-		
+		try {
 		pessoa = (Pessoa) entityManager.createQuery("select p from Pessoa p where p.login ='"+ login + "' and p.senha = '"+ senha +"'").getSingleResult();
 		
+		}catch (javax.persistence.NoResultException e) {
+			// TODO: handle exception
+		}
 		transaction.commit();
 		entityManager.close();
 		return pessoa;
