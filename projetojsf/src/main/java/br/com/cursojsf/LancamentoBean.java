@@ -11,6 +11,9 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -38,10 +41,7 @@ public class LancamentoBean {
 	private List<SelectItem> estados;
 	private List<SelectItem> cidades;
 	
-	
-	
-	
-	
+		
 	public String novo() {
 		lancamento = new Lancamento();
 		return "";
@@ -78,6 +78,12 @@ public class LancamentoBean {
 		Pessoa usuarioLogado = (Pessoa) session.getAttribute("usuarioLogado");
 		
       //	lancamentos = daoLancamento.consultar(usuarioLogado.getId());
+		
+		
+		EntityManager entityManager = JPAUtil.getEntityManager();
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+
 	
 		lancamentos = dao.getListEntity(Lancamento.class);
 	
@@ -89,17 +95,11 @@ public class LancamentoBean {
 			
 			Estados estados = lancamento.getCidade().getEstados();
 			lancamento.setEstado(estados);
-			
 			List<Cidades> cidades = JPAUtil.getEntityManager()
 					.createQuery("from Cidades where estados.id= " + estados.getId()).getResultList();
-			
 			List<SelectItem> selectItemCidades = new ArrayList<SelectItem>();
-			
-			
 			for (Cidades cidade : cidades) {
-				
 				selectItemCidades.add(new SelectItem( cidade, cidade.getNome()));
-				
 			}
 			setCidades(selectItemCidades);
 
@@ -112,23 +112,14 @@ public class LancamentoBean {
 	
 	public void carregaCidade(AjaxBehaviorEvent event) {
 		lancamento = new Lancamento();
-		
 		Estados estados = (Estados) ((HtmlSelectOneMenu) event.getSource()).getValue();
-		
 		if(estados != null) {
-			
 			lancamento.setEstado(estados);
-			
 			List<Cidades> cidades = JPAUtil.getEntityManager()
 					.createQuery("from Cidades where estados.id= " + estados.getId()).getResultList();
-			
 			List<SelectItem> selectItemCidades = new ArrayList<SelectItem>();
-			
-			
 			for (Cidades cidade : cidades) {
-				
 				selectItemCidades.add(new SelectItem( cidade, cidade.getNome()));
-				
 			}
 			setCidades(selectItemCidades);
 		}
@@ -152,7 +143,9 @@ public class LancamentoBean {
 	}
 
 	public List<Lancamento> getLancamentos() {
-		return lancamentos;
+	
+
+	return lancamentos;
 	}
 
 	public void setLancamentos(List<Lancamento> lancamentos) {

@@ -1,6 +1,7 @@
 package br.com.entidades;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -237,6 +238,12 @@ public class Pessoa implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	public String getDataInicioFormatada() {
+	    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	    sdf.setLenient(false);
+	    return sdf.format(this.getDataNascimento());
 	}
 
 }

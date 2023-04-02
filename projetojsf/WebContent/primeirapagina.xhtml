@@ -22,12 +22,13 @@
                        
                     }
                 </style>
-	
+    
 </h:head>
 
 
 
 <h:body>
+
 	<b:navBar brand="Registro de Solicitações" brandHref="#" fixed="top">
 		<b:navbarLinks>
 			<b:navLink value="Home" href="#"></b:navLink>
@@ -89,9 +90,10 @@
 				</b:column>
 				<b:column span="2">
 					<h:outputLabel value="Data de Nascimento: " />
-					<b:inputText value="#{pessoaBean.pessoa.dataNascimento}">
+					<b:inputText value="#{pessoaBean.pessoa.dateNascimento}">
 						<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
 							timeZone="GMT-03:00" />
+						
 					</b:inputText>
 				</b:column>			
 				
@@ -223,9 +225,9 @@
 
 
 		<br />
-
+255
 		<b:dataTable style="width:100%" value="#{pessoaBean.pessoas}" var="p"
-			width="5">
+			width="5" row-style-class="#{p.idade>22?'red':'red'}" >
 
 			<f:facet name="header">
 				<tr>
@@ -238,12 +240,12 @@
 				</tr>
 			</f:facet>
 
-
 			<f:facet name="header">Lista de Usuários Cadastradas</f:facet>
 			<b:dataTableColumn value="#{p.id}" label="ID" />
 			<b:dataTableColumn value="#{p.nome}" />
-			<b:dataTableColumn value="#{p.sobrenome}" />
-			<b:dataTableColumn value="#{p.idade}" />
+			<b:dataTableColumn value="#{p.sobrenome}" >
+			</b:dataTableColumn>
+			<b:dataTableColumn  value="#{p.idade}" />
 
 			<b:dataTableColumn>
 				<h:commandLink title="Editar" action="#{pessoaBean.editar}">
